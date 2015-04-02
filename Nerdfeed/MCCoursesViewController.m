@@ -11,18 +11,35 @@
 @interface MCCoursesViewController ()
 
 @property (nonatomic, strong) NSURLSession *session;
+@property (nonatomic, copy) NSArray *courses;
 
 @end
 
 @implementation MCCoursesViewController
 
-- (NSInteger)tableView:(UITableView *)tableView {
-    return 0;
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    [self.tableView registerClass:[UITableViewCell class]
+           forCellReuseIdentifier:@"UITableViewCell"];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView
+    numberOfRowsInSection:(NSInteger)section {
+//    return 0;
+    return [self.courses count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+//    return nil;
+    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"
+                                                            forIndexPath:indexPath];
+    NSDictionary *course = self.courses[indexPath.row];
+    cell.textLabel.text = course[@"title"];
+
+    return cell;
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style {
@@ -49,10 +66,19 @@
     
     NSURLSessionDataTask *dataTask =
         [self.session dataTaskWithRequest:req
-                        completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-            NSString *json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                        completionHandler:
+         ^(NSData *data, NSURLResponse *response, NSError *error) {
+//            NSString *json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
             
-            NSLog(@"%@", json);
+//            NSLog(@"%@", json);
+              
+             NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data
+                                                                        options:0
+                                                                          error:nil];
+//             NSLog(@"%@", jsonObject);
+             self.courses = jsonObject[@"courses"];
+             
+             NSLog(@"%@", self.courses);
         }];
     [dataTask resume];
 }
