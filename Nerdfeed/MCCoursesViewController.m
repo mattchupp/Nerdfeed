@@ -79,6 +79,10 @@
              self.courses = jsonObject[@"courses"];
              
              NSLog(@"%@", self.courses);
+             
+             dispatch_async(dispatch_get_main_queue(), ^{
+                 [self.tableView reloadData];
+             });
         }];
     [dataTask resume];
 }
