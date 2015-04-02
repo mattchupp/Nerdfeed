@@ -68,14 +68,10 @@
         [self.session dataTaskWithRequest:req
                         completionHandler:
          ^(NSData *data, NSURLResponse *response, NSError *error) {
-//            NSString *json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            
-//            NSLog(@"%@", json);
               
              NSDictionary *jsonObject = [NSJSONSerialization JSONObjectWithData:data
                                                                         options:0
                                                                           error:nil];
-//             NSLog(@"%@", jsonObject);
              self.courses = jsonObject[@"courses"];
              
              NSLog(@"%@", self.courses);
