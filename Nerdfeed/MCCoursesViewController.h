@@ -9,6 +9,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+@class MCWebViewController;
+
 @interface MCCoursesViewController : UITableViewController
+
+@property (nonatomic) MCWebViewController *webViewController; 
 
 @end
