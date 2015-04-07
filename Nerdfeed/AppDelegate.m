@@ -28,7 +28,7 @@
                                          initWithRootViewController:cvc];
     
     MCWebViewController *wvc = [[MCWebViewController alloc] init];
-    cvc.webViewController = wvc; 
+    cvc.webViewController = wvc;
     
     self.window.rootViewController = masterNav;
     
