@@ -30,7 +30,31 @@
     MCWebViewController *wvc = [[MCWebViewController alloc] init];
     cvc.webViewController = wvc;
     
-    self.window.rootViewController = masterNav;
+    //self.window.rootViewController = masterNav;
+    
+    // Add a split view controller for the iPad
+    // First:
+    // Check to make sure we are running on the iPad
+    if ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        
+        // webViewController must be in navigation controller
+        UINavigationController *detailNav =
+        [[UINavigationController alloc] initWithRootViewController:wvc];
+        
+        UISplitViewController *svc = [[UISplitViewController alloc] init];
+        
+        // Set the delegate of the split view controller to the detail VC
+        svc.delegate = wvc;
+        
+        svc.viewControllers = @[masterNav, detailNav];
+        
+        // Set the root view controller of the window to the split view controller
+        self.window.rootViewController = svc;
+    
+    } else {
+        // On non-iPad devices, just use the navigation controller
+        self.window.rootViewController = masterNav; 
+    }
     
     
     self.window.backgroundColor = [UIColor whiteColor];

@@ -51,7 +51,13 @@
     
     self.webViewController.title = course[@"title"];
     self.webViewController.URL = URL;
-    [self.navigationController pushViewController:self.webViewController animated:YES];
+    //[self.navigationController pushViewController:self.webViewController animated:YES];
+    
+    // check if split view controller before pushing view controller
+    if (!self.splitViewController) {
+        [self.navigationController pushViewController:self.webViewController
+                                             animated:YES];
+    }
 }
 
 - (instancetype)initWithStyle:(UITableViewStyle)style {
